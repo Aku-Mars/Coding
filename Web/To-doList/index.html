@@ -2,15 +2,83 @@
 <html>
 <head>
     <title>To-Do List</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        #todo-list {
+            max-width: 300px;
+        }
+        #todo-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        #todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+        #todo-list li input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+        #todo-list li button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>My To-Do List</h1>
-        <input type="text" id="task" placeholder="Tambahkan tugas...">
-        <button onclick="addTask()">Tambah</button>
-        <ul id="taskList"></ul>
+    <div id="todo-list">
+        <h1>To-Do List</h1>
+        <ul id="tasks">
+        </ul>
+        <div>
+            <input type="text" id="task" placeholder="Tambah tugas baru" />
+            <button id="add">Tambah</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const taskList = document.getElementById('tasks');
+        const taskInput = document.getElementById('task');
+        const addBtn = document.getElementById('add');
+
+        function addTask() {
+            const taskText = taskInput.value;
+            if (taskText.trim() !== '') {
+                const taskItem = document.createElement('li');
+                taskItem.innerHTML = `
+                    <input type="text" value="${taskText}" />
+                    <button class="edit">Edit</button>
+                    <button class="delete">Hapus</button>
+                `;
+
+                taskList.appendChild(taskItem);
+                taskInput.value = '';
+
+                const editBtn = taskItem.querySelector('.edit');
+                const deleteBtn = taskItem.querySelector('.delete');
+
+                editBtn.addEventListener('click', function() {
+                    const inputField = taskItem.querySelector('input');
+                    inputField.disabled = !inputField.disabled;
+                    inputField.focus();
+                });
+
+                deleteBtn.addEventListener('click', function() {
+                    taskList.removeChild(taskItem);
+                });
+            }
+        }
+
+        addBtn.addEventListener('click', addTask);
+        taskInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
 </body>
 </html>
