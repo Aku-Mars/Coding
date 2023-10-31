@@ -18,8 +18,12 @@
             padding: 20px;
         }
 
+        .tambah {
+            text-align: center; 
+        }
+
         #todo-list {
-            width: 500px; 
+            width: 600px; 
             margin: 0 auto;
             background-color: #fff;
             border-radius: 5px;
@@ -46,7 +50,7 @@
         }
 
         #todo-list li input[type="text"] {
-            flex: 1;
+            flex: 2;
             margin-right: 10px;
         }
 
@@ -82,11 +86,13 @@
         <h1>To-Do List</h1>
         <ul id="tasks">
         </ul>
-        <div>
+
+        <div class="tambah" >
             <input type="text" id="task" placeholder="Tambah tugas baru" />
             <input type="date" id="taskDate" />
             <button id="add">Tambah</button>
         </div>
+        
     </div>
 </div>
 
