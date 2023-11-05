@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mars Is Here</title>
+    <style>
+        body {
+            width: auto;
+            height: auto;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        a, a:visited {
+            text-decoration: none;
+            color: white;
+        }
+
+        .card {
+            width: auto;
+            height: 700px;
+            transition: all 0.2s;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-inner {
+            width: inherit;
+            height: inherit;
+            background: rgba(255, 255, 255, .05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: scale(1.04) rotate(1deg);
+        }
+
+        .circle {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(#25f904, #0d7b55);
+            border-radius: 50%;
+            position: absolute;
+            animation: move-up6 2s ease-in infinite alternate-reverse;
+        }
+
+        .circle:nth-child(1) {
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle:nth-child(2) {
+            bottom: -100px;
+            right: -100px;
+            animation-name: move-down1;
+        }
+
+        @keyframes move-up6 {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes move-down1 {
+            to {
+                transform: translateY(10px);
+            }
+        }
+
+        .container {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button {
+            position: relative;
+            padding: 8px;
+            margin: 30px 0; /* Tambahkan margin antara tombol */
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 35px;
+            transition: all .15s ease;
+        }
+
+        .button::before,
+        .button::after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            left: 0;
+            height: calc(50% - 5px);
+            border: 1px solid #7D8082;
+            transition: all .15s ease;
+        }
+
+        .button::before {
+            top: 0;
+            border-bottom-width: 0;
+        }
+
+        .button::after {
+            bottom: 0;
+            border-top-width: 0;
+        }
+
+        .button:active,
+        .button:focus {
+            outline: none;
+        }
+
+        .button:active::before,
+        .button:active::after {
+            right: 3px;
+            left: 3px;
+        }
+
+        .button:active::before {
+            top: 3px;
+        }
+
+        .button:active::after {
+            bottom: 3px;
+        }
+
+        .button_lg {
+            position: relative;
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #0f1923;
+            overflow: hidden;
+            box-shadow: inset 0px 0px 0px 1px transparent;
+        }
+
+        .button_lg::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            background-color: #0f1923;
+        }
+
+        .button_lg::after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 4px;
+            height: 4px;
+            background-color: #0f1923;
+            transition: all .2s ease;
+        }
+
+        .button_sl {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: -1px;
+            left: -8px;
+            width: 0;
+            background-color: #ff4655;
+            transform: skew(-15deg);
+            transition: all .2s ease;
+        }
+
+        .button_text {
+            position: relative;
+        }
+
+        .button:hover {
+            color: #0f1923;
+        }
+
+        .button:hover .button_sl {
+            width: calc(100% + 15px);
+        }
+
+        .button:hover .button_lg::after {
+            background-color: #fff;
+        }
+
+        .displayText {
+            width: 400px;
+            height:45px;
+          }
+          
+          .content {
+            display: block;
+            position: sticky;
+            overflow: hidden;
+            font-family: 'Lato', sans-serif;
+            font-size: 50px;
+            line-height: 40px;
+            color: #ecf0f1;
+          }
+          
+          .content__container {
+            font-weight: 600;
+            overflow: hidden;
+            height: 40px;
+            padding: 0 40px;
+          }
+          
+          .content__container:before {
+            content: '[';
+            left: 0;
+          }
+          
+          .content__container:after {
+            content: ']';
+            position: absolute;
+            right: 0;
+          }
+          
+          .content__container:after, .content__container:before {
+            position: absolute;
+            top: -2px;
+            color: #0051ff;
+            font-size: 50px;
+            line-height: 36px;
+            -webkit-animation-name: opacity;
+            -webkit-animation-duration: 2s;
+            -webkit-animation-iteration-count: infinite;
+            animation-name: opacity;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+          }
+          
+          .content__container__text {
+            display: inline;
+            float: left;
+            margin: 0;
+          }
+          
+          .content__container__list {
+            margin-top: 0;
+            padding-left: 42%;
+            text-align: left;
+            list-style: none;
+            -webkit-animation-name: change;
+            -webkit-animation-duration: 10s;
+            -webkit-animation-iteration-count: infinite;
+            animation-name: change;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+          }
+          
+          .content__container__list__item {
+            line-height: 40px;
+            margin: 0;
+          }
+          
+          @keyframes opacity {
+            0%, 100% {
+              opacity: 0;
+            }
+          
+            50% {
+              opacity: 1;
+            }
+          }
+          
+          @keyframes change {
+            0%, 12.66%, 100% {
+              transform: translate3d(0, 0, 0);
+            }
+          
+            16.66%, 29.32% {
+              transform: translate3d(0, -25%, 0);
+            }
+          
+            33.32%, 45.98% {
+              transform: translate3d(0, -50%, 0);
+            }
+          
+            49.98%, 62.64% {
+              transform: translate3d(0, -75%, 0);
+            }
+          
+            66.64%, 79.3% {
+              transform: translate3d(0, -50%, 0);
+            }
+          
+            83.3%, 95.96% {
+              transform: translate3d(0, -25%, 0);
+            }
+          }
+           
+    </style>
+
+</head>
+
+<body>
+    <div class="card">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="card-inner">
+            <div class="container">
+                <div class="displayText">
+                    <div class="content">
+                      <div class="content__container">
+                        <p class="content__container__text">
+                          Halo
+                        </p>
+                      
+                        <ul class="content__container__list">
+                            <li class="content__container__list__item">Kamu !</li>
+                            <li class="content__container__list__item">Dunia !</li>
+                            <li class="content__container__list__item">Aku !</li>
+                            <li class="content__container__list__item">Bener !</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <br
+            </div>
+            
+
+            <div class="container">
+
+                <button class="button">
+                    <span class="button_lg">
+                        <span class="button_sl"></span>
+                        <span class="button_text"><a href="https://akumars.dev/shop/" target="_blank">Menuju Ke Shop</a></span>
+                    </span>
+                </button>
+
+                <button class="button">
+                    <span class="button_lg">
+                        <span class="button_sl"></span>
+                        <span class="button_text"><a href="https://akumars.dev/slims/" target="_blank">Menuju Ke Slims (CONTOH APK SO)</a></span>
+                    </span>
+                </button>
+
+                <button class="button">
+                  <span class="button_lg">
+                      <span class="button_sl"></span>
+                      <span class="button_text"><a href="https://wa.me/62895332008770?text=BANG%20MAU%20JOKI%20SO%20SAMPAI%20DI%20TERIMA%20BANG%20CEPETAN%0A500K%20PUN%20KU%20BAYAR" target="_blank">Jasa Joki SO (500K Sampai Diterima)</a></span>
+                  </span>
+              </button>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
