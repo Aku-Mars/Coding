@@ -1,377 +1,223 @@
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mars Is Here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <title>MARS IS HERE</title>
     <style>
-        body {
-            width: auto;
-            height: auto;
-            background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+      body {
+          background-color: #333;
+          color: white;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 20px;
+          margin: 0 auto;
+          margin-top: 125px;
+          max-width: 800px;
+      }
 
-        a, a:visited {
-            text-decoration: none;
-            color: white;
-        }
+      h1 {
+          margin-top: 20px;
+      }
 
-        .card {
-            width: auto;
-            height: 700px;
-            transition: all 0.2s;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+      .card {
+        width: auto;
+        height: 450px;
+        margin: 0 auto;
+        background-color: #011522;
+        border-radius: 8px;
+        z-index: 1;
+       }
+       
+       .tools {
+        display: flex;
+        align-items: center;
+        padding: 9px;
+       }
+       
+       .circle {
+        padding: 0 4px;
+       }
+       
+       .box {
+        display: inline-block;
+        align-items: center;
+        width: 10px;
+        height: 10px;
+        padding: 1px;
+        border-radius: 50%;
+       }
+       
+       .red {
+        background-color: #ff605c;
+       }
+       
+       .yellow {
+        background-color: #ffbd44;
+       }
+       
+       .green {
+        background-color: #00ca4e;
+       }
+       
+      .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Menyusun item secara horizontal di tengah */
+    }
+    
+    .button {
+      background-color: #008CBA;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      color: white;
+      border: none;
+      width: 80%; /* Lebar tombol 100% dari parentnya */
+      padding: 15px; /* Padding tombol */
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Menambahkan efek transisi untuk perubahan warna dan transformasi */
+      display: inline-block; /* Mengubah tombol menjadi inline-block agar efek transisi transform berfungsi */
+    }
 
-        .card-inner {
-            width: inherit;
-            height: inherit;
-            background: rgba(255, 255, 255, .05);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .button:hover {
+        background-color: #005B8F;
+        transform: scale(1.1); /* Efek zoom in pada hover */
+    }
+    
+    .popup-content {
+        background-color: #333;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        padding: 20px;
+        width: 80%; /* Menyesuaikan lebar konten popup */
+        max-width: 400px; /* Menetapkan lebar maksimum */
+    }    
 
-        .card:hover {
-            transform: scale(1.04) rotate(1deg);
-        }
+      .popup {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 1;
+          justify-content: center;
+          align-items: center;
+      }
 
-        .circle {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(#25f904, #0d7b55);
-            border-radius: 50%;
-            position: absolute;
-            animation: move-up6 2s ease-in infinite alternate-reverse;
-        }
+      .popup-content {
+          background-color: #333;
+          color: white;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          padding: 20px;
+          width: 60%;
+      }
 
-        .circle:nth-child(1) {
-            top: -100px;
-            left: -100px;
-        }
+      .popup.active {
+          display: flex;
+      }
 
-        .circle:nth-child(2) {
-            bottom: -100px;
-            right: -100px;
-            animation-name: move-down1;
-        }
-
-        @keyframes move-up6 {
-            to {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes move-down1 {
-            to {
-                transform: translateY(10px);
-            }
-        }
-
-        .container {
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .button {
-            position: relative;
-            padding: 8px;
-            margin: 30px 0; /* Tambahkan margin antara tombol */
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 35px;
-            transition: all .15s ease;
-        }
-
-        .button::before,
-        .button::after {
-            content: '';
-            display: block;
-            position: absolute;
-            right: 0;
-            left: 0;
-            height: calc(50% - 5px);
-            border: 1px solid #7D8082;
-            transition: all .15s ease;
-        }
-
-        .button::before {
-            top: 0;
-            border-bottom-width: 0;
-        }
-
-        .button::after {
-            bottom: 0;
-            border-top-width: 0;
-        }
-
-        .button:active,
-        .button:focus {
-            outline: none;
-        }
-
-        .button:active::before,
-        .button:active::after {
-            right: 3px;
-            left: 3px;
-        }
-
-        .button:active::before {
-            top: 3px;
-        }
-
-        .button:active::after {
-            bottom: 3px;
-        }
-
-        .button_lg {
-            position: relative;
-            display: block;
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #0f1923;
-            overflow: hidden;
-            box-shadow: inset 0px 0px 0px 1px transparent;
-        }
-
-        .button_lg::before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 2px;
-            height: 2px;
-            background-color: #0f1923;
-        }
-
-        .button_lg::after {
-            content: '';
-            display: block;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 4px;
-            height: 4px;
-            background-color: #0f1923;
-            transition: all .2s ease;
-        }
-
-        .button_sl {
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: -1px;
-            left: -8px;
-            width: 0;
-            background-color: #ff4655;
-            transform: skew(-15deg);
-            transition: all .2s ease;
-        }
-
-        .button_text {
-            position: relative;
-        }
-
-        .button:hover {
-            color: #0f1923;
-        }
-
-        .button:hover .button_sl {
-            width: calc(100% + 15px);
-        }
-
-        .button:hover .button_lg::after {
-            background-color: #fff;
-        }
-
-        .displayText {
-            width: 400px;
-            height:45px;
-            margin-top: 35px;
+      @media screen and (max-width: 600px) {
+          body {
+              font-size: 16px;
+              padding: 10px;
           }
-          
-          .content {
-            display: block;
-            position: sticky;
-            overflow: hidden;
-            font-family: 'Lato', sans-serif;
-            font-size: 50px;
-            line-height: 40px;
-            color: #ecf0f1;
-          }
-          
-          .content__container {
-            font-weight: 600;
-            overflow: hidden;
-            height: 40px;
-            padding: 0 40px;
-          }
-          
-          .content__container:before {
-            content: '[';
-            left: 0;
-          }
-          
-          .content__container:after {
-            content: ']';
-            position: absolute;
-            right: 0;
-          }
-          
-          .content__container:after, .content__container:before {
-            position: absolute;
-            top: -2px;
-            color: #0051ff;
-            font-size: 50px;
-            line-height: 36px;
-            -webkit-animation-name: opacity;
-            -webkit-animation-duration: 2s;
-            -webkit-animation-iteration-count: infinite;
-            animation-name: opacity;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
-          }
-          
-          .content__container__text {
-            display: inline;
-            float: left;
-            margin: 0;
-          }
-          
-          .content__container__list {
-            margin-top: 0;
-            padding-left: 42%;
-            text-align: left;
-            list-style: none;
-            -webkit-animation-name: change;
-            -webkit-animation-duration: 10s;
-            -webkit-animation-iteration-count: infinite;
-            animation-name: change;
-            animation-duration: 10s;
-            animation-iteration-count: infinite;
-          }
-          
-          .content__container__list__item {
-            line-height: 40px;
-            margin: 0;
-          }
-          
-          @keyframes opacity {
-            0%, 100% {
-              opacity: 0;
-            }
-          
-            50% {
-              opacity: 1;
-            }
-          }
-          
-          @keyframes change {
-            0%, 12.66%, 100% {
-              transform: translate3d(0, 0, 0);
-            }
-          
-            16.66%, 29.32% {
-              transform: translate3d(0, -25%, 0);
-            }
-          
-            33.32%, 45.98% {
-              transform: translate3d(0, -50%, 0);
-            }
-          
-            49.98%, 62.64% {
-              transform: translate3d(0, -75%, 0);
-            }
-          
-            66.64%, 79.3% {
-              transform: translate3d(0, -50%, 0);
-            }
-          
-            83.3%, 95.96% {
-              transform: translate3d(0, -25%, 0);
-            }
-          }
-           
-    </style>
 
+          ul {
+              padding: 10px;
+          }
+
+          li {
+              padding: 10px;
+          }
+
+          .card {
+              height: 500px;
+          }
+      }
+  </style>
 </head>
+<body id="body">
 
-<body>
-    <div class="card">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="card-inner">
-            <div class="container">
-                <div class="displayText">
-                    <div class="content">
-                      <div class="content__container">
-                        <p class="content__container__text">
-                          Halo
-                        </p>
-                      
-                        <ul class="content__container__list">
-                            <li class="content__container__list__item">Kamu !</li>
-                            <li class="content__container__list__item">Dunia !</li>
-                            <li class="content__container__list__item">Aku !</li>
-                            <li class="content__container__list__item">Bener !</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <br
-            </div>
-            
+  <div class="card">
+    <div class="tools">
+      <div class="circle">
+        <span class="red box"></span>
+      </div>
+      <div class="circle">
+        <span class="yellow box"></span>
+      </div>
+      <div class="circle">
+        <span class="green box"></span>
+      </div>
+    </div>
+    <div class="card__content">
+      <div class="container">
+        <h1>SELAMAT DATANG DI MARS HUB</h1>
+    </div>
 
-            <div class="container">
+    <div class="container">
+        <a class="button" data-href="https://akumars.dev/shop/" target="_blank">Menuju Ke Shop</a>
+        <a class="button" data-href="https://akumars.dev/slims/" target="_blank">Menuju Ke Slims (CONTOH APK SO)</a>
+        <a class="button" data-href="https://wa.me/62895332008770?text=BANG%20MAU%20JOKI%20SO%20SAMPAI%20DI%20TERIMA%20BANG%20CEPETAN%0A500K%20PUN%20KU%20BAYAR" target="_blank">Jasa Joki SO (500K Sampai Diterima)</a>
+        <a class="button" data-href="https://akumars.dev/list/">List Tugas PSTI-C</a>
+    </div>
 
-                <button class="button">
-                    <span class="button_lg">
-                        <span class="button_sl"></span>
-                        <span class="button_text"><a href="https://akumars.dev/shop/" target="_blank">Menuju Ke Shop</a></span>
-                    </span>
-                </button>
-
-                <button class="button">
-                    <span class="button_lg">
-                        <span class="button_sl"></span>
-                        <span class="button_text"><a href="https://akumars.dev/slims/" target="_blank">Menuju Ke Slims (CONTOH APK SO)</a></span>
-                    </span>
-                </button>
-
-                <button class="button">
-                  <span class="button_lg">
-                      <span class="button_sl"></span>
-                      <span class="button_text"><a href="https://wa.me/62895332008770?text=BANG%20MAU%20JOKI%20SO%20SAMPAI%20DI%20TERIMA%20BANG%20CEPETAN%0A500K%20PUN%20KU%20BAYAR" target="_blank">Jasa Joki SO (500K Sampai Diterima)</a></span>
-                  </span>
-              </button>
-
-              <button class="button">
-                <span class="button_lg">
-                    <span class="button_sl"></span>
-                    <span class="button_text"><a href="https://akumars.dev/link/">Tugas Tugas PSTI-C</a></span>
-                </span>
-            </button>
-
-            </div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>SELAMAT DATANG DI MARS AREA</p>
+            <button id="close-popup">Tutup</button>
         </div>
     </div>
+    </div>
+  </div>
+
+  <script>
+    var popup = document.getElementById('popup');
+    var closePopup = document.getElementById('close-popup');
+
+    function togglePopup() {
+        popup.classList.toggle('active');
+    }
+
+    closePopup.addEventListener('click', function () {
+        togglePopup();
+    });
+
+    var buttons = document.querySelectorAll('.button'); // Change class name to 'button'
+
+    buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var href = btn.getAttribute('data-href');
+            if (href) {
+                window.open(href, '_blank');
+            }
+        });
+    });
+
+    // Check if the popup should be displayed
+    var lastPopupTime = localStorage.getItem('lastPopupTime');
+    var currentTime = new Date().getTime();
+
+    if (!lastPopupTime || (currentTime - lastPopupTime) > (60 * 60 * 1000)) {
+        // Display the popup if it has not been displayed or has been more than 1 hour
+        popup.classList.add('active');
+        // Save the last time the popup was displayed
+        localStorage.setItem('lastPopupTime', currentTime);
+    } else {
+        // Hide the popup if it doesn't meet the conditions above
+        popup.classList.remove('active');
+    }
+</script>
+
 </body>
 </html>
-
