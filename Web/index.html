@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <title>MARS IS HERE</title>
     <style>
+
+    /* Section Body */
       body {
           background-color: #333;
           color: white;
@@ -21,6 +23,7 @@
           margin-top: 20px;
       }
 
+    /* Section Card */
       .card {
         width: auto;
         height: 450px;
@@ -66,28 +69,43 @@
         margin-bottom: 20px;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Menyusun item secara horizontal di tengah */
+        align-items: center
     }
-    
+
+    /* Section Button */
     .button {
       background-color: #008CBA;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       color: white;
       border: none;
-      width: 80%; /* Lebar tombol 100% dari parentnya */
-      padding: 15px; /* Padding tombol */
+      width: 80%; 
+      padding: 15px; 
       cursor: pointer;
       margin-top: 10px;
-      transition: background-color 0.3s ease, transform 0.2s ease; /* Menambahkan efek transisi untuk perubahan warna dan transformasi */
-      display: inline-block; /* Mengubah tombol menjadi inline-block agar efek transisi transform berfungsi */
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
     }
 
     .button:hover {
         background-color: #005B8F;
-        transform: scale(1.1); /* Efek zoom in pada hover */
+        transform: scale(1.1);
     }
-    
+
+    /* Section Popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        justify-content: center;
+        align-items: center;
+    }
+
     .popup-content {
         background-color: #333;
         color: white;
@@ -95,55 +113,32 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         text-align: center;
         padding: 20px;
-        width: 80%; /* Menyesuaikan lebar konten popup */
-        max-width: 400px; /* Menetapkan lebar maksimum */
-    }    
+        width: 80%;
+        max-width: 400px;
+    }   
 
-      .popup {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          z-index: 1;
-          justify-content: center;
-          align-items: center;
-      }
+    .popup.active {
+        display: flex;
+    }
 
-      .popup-content {
-          background-color: #333;
-          color: white;
-          border-radius: 5px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-          text-align: center;
-          padding: 20px;
-          width: 60%;
-      }
+    @media screen and (max-width: 600px) {
+        body {
+            font-size: 16px;
+            padding: 10px;
+        }
 
-      .popup.active {
-          display: flex;
-      }
+        ul {
+            padding: 10px;
+        }
 
-      @media screen and (max-width: 600px) {
-          body {
-              font-size: 16px;
-              padding: 10px;
-          }
+        li {
+            padding: 10px;
+        }
 
-          ul {
-              padding: 10px;
-          }
-
-          li {
-              padding: 10px;
-          }
-
-          .card {
-              height: 500px;
-          }
-      }
+        .card {
+            height: 500px;
+        }
+    }
   </style>
 </head>
 <body id="body">
@@ -160,6 +155,7 @@
         <span class="green box"></span>
       </div>
     </div>
+
     <div class="card__content">
       <div class="container">
         <h1>SELAMAT DATANG DI MARS HUB</h1>
@@ -178,46 +174,50 @@
             <button id="close-popup">Tutup</button>
         </div>
     </div>
+
     </div>
   </div>
 
-  <script>
-    var popup = document.getElementById('popup');
-    var closePopup = document.getElementById('close-popup');
+    <script>
+        var popup = document.getElementById('popup');
+        var closePopup = document.getElementById('close-popup');
 
-    function togglePopup() {
-        popup.classList.toggle('active');
-    }
+        function togglePopup() {
+            // Toggle class 'active' untuk menampilkan atau menyembunyikan popup
+            popup.classList.toggle('active');
+        }
 
-    closePopup.addEventListener('click', function () {
-        togglePopup();
-    });
-
-    var buttons = document.querySelectorAll('.button'); // Change class name to 'button'
-
-    buttons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var href = btn.getAttribute('data-href');
-            if (href) {
-                window.open(href, '_blank');
-            }
+        closePopup.addEventListener('click', function () {
+            // Menutup popup ketika tombol tutup diklik
+            togglePopup();
         });
-    });
 
-    // Check if the popup should be displayed
-    var lastPopupTime = localStorage.getItem('lastPopupTime');
-    var currentTime = new Date().getTime();
+        var buttons = document.querySelectorAll('.button');
 
-    if (!lastPopupTime || (currentTime - lastPopupTime) > (60 * 60 * 1000)) {
-        // Display the popup if it has not been displayed or has been more than 1 hour
-        popup.classList.add('active');
-        // Save the last time the popup was displayed
-        localStorage.setItem('lastPopupTime', currentTime);
-    } else {
-        // Hide the popup if it doesn't meet the conditions above
-        popup.classList.remove('active');
-    }
-</script>
+        buttons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var href = btn.getAttribute('data-href');
+                if (href) {
+                    // Membuka tautan di jendela baru ketika tombol diklik
+                    window.open(href, '_blank');
+                }
+            });
+        });
+
+        // Memeriksa apakah popup harus ditampilkan
+        var lastPopupTime = localStorage.getItem('lastPopupTime');
+        var currentTime = new Date().getTime();
+
+        if (!lastPopupTime || (currentTime - lastPopupTime) > (24 * 60 * 60 * 1000)) {
+            // Menampilkan popup jika belum pernah ditampilkan atau sudah lebih dari 1 hari
+            togglePopup();
+            // Menyimpan waktu terakhir popup ditampilkan
+            localStorage.setItem('lastPopupTime', currentTime);
+        } else {
+            // Menyembunyikan popup jika tidak memenuhi kondisi di atas
+            popup.classList.remove('active');
+        }        
+    </script>
 
 </body>
 </html>
